@@ -4,163 +4,223 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/secondaryLightColor">
 
     <Button
         android:id="@+id/btnMaps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="MAPS"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/ic_place"
+        android:backgroundTint="@color/common_google_signin_btn_text_light_pressed"
+        android:gravity="left"
         android:textAlignment="center"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="80dp" />
-
-    <Button
-        android:id="@+id/btnIzquierda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="8dp"
-        android:text="IZQUIERDA"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/txtBufferIn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnDerecha" />
-
-    <Button
-        android:id="@+id/btnReversa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="8dp"
-        android:text="REVERSA"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnIzquierda" />
-
-    <Button
-        android:id="@+id/btnDerecha"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="8dp"
-        android:text="DERECHA"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.511"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnApagar" />
+        app:layout_constraintTop_toBottomOf="@+id/txtControl"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/txtControl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="41dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:text="CONTROL"
         android:textAlignment="center"
-        android:textSize="18sp"
+        android:textColor="@color/secondaryTextColor"
+        android:textSize="30sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/txtBufferIn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnEncender"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="8dp"
-        android:text="AVANZAR"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtControl" />
-
-    <Button
-        android:id="@+id/btnApagar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="8dp"
-        android:text="PARAR"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEncender" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/txtBufferIn"
         android:layout_width="match_parent"
-        android:layout_height="28dp"
-        android:layout_marginTop="456dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="500dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="300dp"
+        android:background="@color/common_google_signin_btn_text_dark_disabled"
+        android:gravity="center|end"
+        android:inputType="text|textImeMultiLine"
         android:text="Datos"
-        android:textAlignment="viewStart"
+        android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnDesconectar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="508dp"
-        android:text="Desconectar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="300dp"
+        android:background="@drawable/ic_logout"
+        android:gravity="right"
         android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/txtBufferIn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.927"
+        app:layout_constraintStart_toEndOf="@+id/btnMaps"
+        app:layout_constraintTop_toBottomOf="@+id/txtControl"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/lblUsertLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnDesconectar" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:gravity="center_horizontal"
+        android:text="sfsfs"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toStartOf="@+id/btnDesconectar"
+        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintStart_toEndOf="@+id/btnMaps"
+        app:layout_constraintTop_toBottomOf="@+id/txtControl"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/lblIDUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="353dp"
-        android:layout_marginTop="156dp"
+        android:layout_marginBottom="48dp"
         android:text="TextView"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnDesconectar" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/lblUbication"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="294dp"
-        android:layout_marginTop="155dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:text="TextView"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="left"
+        android:text="gddgdhg"
+        android:textAlignment="textStart"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="14sp"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/lblIDUser"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnDesconectar"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/btnMaps"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/txtBufferIn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnMaps"
+        app:layout_constraintVertical_bias="0.941">
+
+        <TableRow
+            android:id="@+id/tableRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingHorizontal="50dp">
+
+            <Button
+                android:id="@+id/btnEncender"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/ic_cheuron"
+                android:rotation="270"
+                android:textAlignment="center"
+                tools:layout_editor_absoluteX="166dp"
+                tools:layout_editor_absoluteY="80dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|center_horizontal">
+
+            <Button
+                android:id="@+id/btnIzquierda"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/ic_cheuron"
+                android:rotation="180"
+                tools:layout_editor_absoluteX="86dp"
+                tools:layout_editor_absoluteY="353dp"
+                tools:text=" " />
+
+            <Button
+                android:id="@+id/btnApagar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/ic_mas"
+                android:rotation="45"
+                android:rotationY="45"
+                android:textAlignment="center"
+                tools:layout_editor_absoluteX="165dp"
+                tools:layout_editor_absoluteY="180dp" />
+
+            <Button
+                android:id="@+id/btnDerecha"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/ic_cheuron"
+                tools:layout_editor_absoluteX="165dp"
+                tools:layout_editor_absoluteY="260dp"
+                tools:text=" " />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btnReversa"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/ic_cheuron"
+                android:rotation="90"
+                android:textAlignment="center"
+                tools:layout_editor_absoluteX="166dp"
+                tools:layout_editor_absoluteY="461dp" />
+        </TableRow>
+    </TableLayout>
 </android.support.constraint.ConstraintLayout>
