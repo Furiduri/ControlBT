@@ -88,7 +88,7 @@ TextView lblUserActual, lblIDUser, lblUbicacion;
                         if(validarCoordenada(Coordenadas)&& lblUbicacion.getText().toString() != Coordenadas){
                             String[] corden = Coordenadas.split(",");
                             lblUbicacion.setText(corden[0]+"\n"+corden[1]);
-                            txtBufferIn.setText("Dato: " + Coordenadas);//<-<- PARTE A MODIFICAR >->-
+                            txtBufferIn.setText(Coordenadas);//<-<- PARTE A MODIFICAR >->-
                             //TablaUSER.UPDATE_Ubicacion(lblIDUser.getText().toString(),Coordenadas,getParent().getApplicationContext());
                         }
                     }
@@ -136,9 +136,12 @@ TextView lblUserActual, lblIDUser, lblUbicacion;
         btnMaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                map condenadas = new map(lblUbicacion.getText().toString());
+                Double Lat =  -103.389305;//getIntent().getExtras().getDouble("lat");
+                Double Log = 20.702583;
+                txtBufferIn.setText(Lat+","+Log);
+                map condenadas = new map(txtBufferIn.getText().toString());
                 if (condenadas.getLat() != 0 && condenadas.getLog() != 0) {
-                    TablaUSER.UPDATE_Ubicacion(lblIDUser.getText().toString(),lblUbicacion.getText().toString(),getApplicationContext());
+                    TablaUSER.UPDATE_Ubicacion(lblIDUser.getText().toString(),txtBufferIn.getText().toString(),getApplicationContext());
                     Intent intent = new Intent(getApplicationContext(), Ubicacion.class);
                     intent.putExtra("lat", condenadas.getLat());
                     intent.putExtra("log", condenadas.getLog());

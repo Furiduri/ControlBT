@@ -1,5 +1,8 @@
 package com.example.controlbt;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -7,6 +10,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.controlbt.map;
@@ -40,10 +44,21 @@ public class Ubicacion extends FragmentActivity implements OnMapReadyCallback {
         mMap = googleMap;
         //Bundle datos = this.getIntent().getExtras();
         // Add a marker in Sydney and move the camera
-        Double Lat = getIntent().getExtras().getDouble("lat");
-        Double Log = getIntent().getExtras().getDouble("log");
+        Double Lat =  -103.389305;//getIntent().getExtras().getDouble("lat");
+        Double Log = 20.702583;//getIntent().getExtras().getDouble("log");
         LatLng sydney = new LatLng(Log,Lat);
+        CameraPosition position = CameraPosition.builder()
+                .target(new LatLng(Log, Lat))
+                .zoom(200f)
+                .bearing(0.0f)
+                .tilt(0.0f)
+                .build();
+        mMap.animateCamera(CameraUpdateFactory
+        .newCameraPosition(position),null);
         mMap.addMarker(new MarkerOptions().position(sydney).title("You are Her"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+
     }
 }
