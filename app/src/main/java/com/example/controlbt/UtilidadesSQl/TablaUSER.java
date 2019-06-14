@@ -162,4 +162,76 @@ public class TablaUSER {
         }
     }
 
+    //Agregar Nuevas palabras
+    public static String addUsuario(String nombre, String contraseña, Context context){
+        String ResID = "0";
+        //Creamos nuestra conexion
+        BaseDeDatos conn = new BaseDeDatos(context);
+        SQLiteDatabase db=conn.getWritableDatabase();
+        //Parametros
+        ContentValues Values = new ContentValues();
+        Values.put(Campo_nombre,nombre.toUpperCase());
+        Values.put(Campo_password,contraseña);
+        //Metodo insert para insertar datos en la tabla Words
+        try{
+            //Busca primero que no exista la palabra
+            Cursor cursor = db.rawQuery(" SELECT "+CAMPO_PK_GPS+
+                            " FROM "+Tabla_Name+" WHERE "+Campo_nombre+" LIKE '"+nombre+"' "
+                    , null);
+            //Si existe retorna el ID y el nivel de la palabra
+            cursor.moveToFirst();
+            ResID = cursor.getString(0) + " (YA EXISTE!)";
+            contraseña = cursor.getString(1);
+            cursor.close();
+        }catch (Exception e){
+            //si no existe la agrega
+            Long idResultante=db.insert(Campo_nombre,Campo_password,Values);
+            db.close();
+            //Retorno del ID y la comprobacion de los datos ingresados
+            ResID = idResultante.toString();
+        }
+        return ResID + ", El nombre: "+nombre;
+    }
+
+    //Edita la Ubicacion
+    public static void editUsuario(String ID, String nombre, String newContra, String oldContra, Context context)
+        {
+
+            //Creamos nuestra conexion
+            BaseDeDatos conn = new BaseDeDatos(context);
+            SQLiteDatabase db=conn.getWritableDatabase();
+
+            //Metodo insert para insertar datos en la tabla Words
+            try
+                {
+                    //Bucamos el usuario
+                    Cursor cursor = db.rawQuery(" SELECT "+
+                                    CAMPO_PK_GPS+
+                                    " FROM "+Tabla_Name+
+                                    " WHERE "+Campo_nombre+" LIKE "+ID+" AND "+Campo_password+" LIKE '"+oldContra+"'"
+                            , null);
+                    //Si existen datos los aguardamos en un Array List
+                    cursor.moveToFirst();
+                    Integer IDr  = -1;
+                    if(!cursor.getString(0).isEmpty()){
+
+                        IDr = cursor.getInt(0);
+                        cursor.close();
+                    }
+
+
+                //Actualiza el usuario
+                //Parametros
+                if((Integer.valueOf(ID)).equals(IDr))
+                    {
+                        ContentValues Values = new ContentValues();
+                        Values.put(Campo_nombre, nombre);
+                        Values.put(Campo_password, newContra);
+                        db.update(Tabla_Name, Values, CAMPO_PK_GPS + "=" + ID, null);
+                    }
+                }catch (Exception e)
+                    {
+                    Toast.makeText(context,"ERROR: "+e.getMessage()+"\nCasuse: "+e.getCause(),Toast.LENGTH_LONG).show();
+                    }
+        }
 }
