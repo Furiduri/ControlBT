@@ -1,4 +1,4 @@
-package com.example.elgepeese.Objetos;
+package com.example.controlbt.Objetos;
 
 public class ObjUsuario {
 

@@ -1,10 +1,10 @@
-package com.example.elgepeese;
+package com.example.controlbt;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.elgepeese.UtilidadesSQl.TablaUSER;
+import com.example.controlbt.UtilidadesSQl.TablaUSER;
 
 public class BaseDeDatos extends SQLiteOpenHelper {
     public BaseDeDatos(Context context) {

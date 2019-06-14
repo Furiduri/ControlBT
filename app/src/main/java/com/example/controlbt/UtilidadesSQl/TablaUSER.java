@@ -1,11 +1,11 @@
-package com.example.elgepeese.UtilidadesSQl;
+package com.example.controlbt.UtilidadesSQl;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.elgepeese.BaseDeDatos;
-import com.example.elgepeese.Objetos.ObjUsuario;
+import com.example.controlbt.BaseDeDatos;
+import com.example.controlbt.Objetos.ObjUsuario;
 
 import java.util.ArrayList;
 
@@ -25,7 +25,7 @@ public class TablaUSER {
              + Campo_password +" TEXT, "
              +Campo_ubicacion+" TEXT )";
 
-     //Obtener Palabras
+     //Obtener Usuarios
      public static ArrayList<ObjUsuario> GET_Users(Context context){
          ArrayList<ObjUsuario> usuarioArrayList = new ArrayList<ObjUsuario>();
          //Creamos nuestra conexion
@@ -53,5 +53,31 @@ public class TablaUSER {
          }
          return usuarioArrayList;
      }
+
+    //Obtener Palabras
+    public static ObjUsuario Login(Context context, String User,String Password){
+        //Creamos nuestra conexion
+        BaseDeDatos conn = new BaseDeDatos(context);
+        SQLiteDatabase db=conn.getWritableDatabase();
+        try {
+            //Bucamos el usuario
+            Cursor cursor = db.rawQuery(" SELECT "+
+                            CAMPO_PK_GPS+","+Campo_nombre+","+Campo_ubicacion+
+                            " FROM "+Tabla_Name+
+                    " WHERE "+Campo_nombre+"LIKE '"+User+"' AND "+Campo_password+" LIKE '"+Password+"'"
+                    , null);
+            //Si existen datos los aguardamos en un Array List
+            cursor.moveToFirst();
+                ObjUsuario objUser = new ObjUsuario(
+                        Integer.valueOf(cursor.getString(0)),
+                        cursor.getString(1),
+                        cursor.getString(2));
+            cursor.close();
+            return objUser;
+        }catch (Exception e){
+            //Si no hay datos o ocurre un error se vacia el array, para evitar enviar datos corruptos
+            return new ObjUsuario(-1,"","");
+        }
+    }
 
  }

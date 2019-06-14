@@ -77,7 +77,9 @@ public class DispositivosBT extends AppCompatActivity {
             // mientras toma un EXTRA_DEVICE_ADDRESS que es la dirección MAC.
             Intent i = new Intent(DispositivosBT.this, UserInterfaz.class);//<-<- PARTE A MODIFICAR >->->
             i.putExtra(EXTRA_DEVICE_ADDRESS, address);
+            i.putExtra("ID",getIntent().getExtras().getInt("ID"));
             startActivity(i);
+            finish();
         }
     };
 
