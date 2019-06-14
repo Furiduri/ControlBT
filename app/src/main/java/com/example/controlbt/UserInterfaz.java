@@ -3,6 +3,7 @@ package com.example.controlbt;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -18,21 +19,24 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
+import com.example.controlbt.Objetos.ObjUsuario;
+import com.example.controlbt.UtilidadesSQl.TablaUSER;
 import com.example.controlbt.map;
 
 public class UserInterfaz extends AppCompatActivity {
 Button btnEncender, btnApagar, btnDesconectar, btnDerecha, btnIzquierda, btnReversa, btnMaps;
 TextView txtBufferIn;
-map ubicacion;
+TextView lblUserActual, lblIDUser, lblUbicacion;
 
     Handler bluetoothIn;
     final int handlerState = 0;
     private BluetoothAdapter btAdapter = null;
     private BluetoothSocket btSocket = null;
-    private StringBuilder DataStringIN = new StringBuilder();
+    private StringBuilder DataStringIN ;
     private ConnectedThread MyConexionBT;
-
+    private ObjUsuario UserLogin;
     // Identificador unico de servicio - SPP UUID
     private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     // String para la direccion MAC
@@ -49,31 +53,60 @@ map ubicacion;
         btnReversa =(Button) findViewById(R.id.btnReversa);
         btnMaps=(Button)findViewById(R.id.btnMaps);
         txtBufferIn=(TextView) findViewById(R.id.txtBufferIn);
-    btnDerecha=(Button) findViewById(R.id.btnDerecha);
+        lblUserActual = (TextView)findViewById(R.id.lblUsertLogin);
+        lblIDUser = (TextView)findViewById(R.id.lblIDUser);
+        lblUbicacion = (TextView)findViewById(R.id.lblUbication);
+        btnDerecha=(Button) findViewById(R.id.btnDerecha);
         btnIzquierda=(Button) findViewById(R.id.btnIzquierda);
-
+        //Get Data User
+        Integer ID = getIntent().getExtras().getInt("ID");
+        if( ID > -1){
+             UserLogin = TablaUSER.GET_User(this,ID);
+             lblUserActual.setText(
+                     "Usuario: "+UserLogin.getName()+" \nUltima Ubicacion: "+UserLogin.getUbicacion()
+             );
+             lblIDUser.setText(UserLogin.getID().toString());
+             lblUbicacion.setText(UserLogin.getUbicacion());
+         }
+        //Bluetooth
         bluetoothIn = new Handler() {
             public void handleMessage(android.os.Message msg) {
-                if (msg.what == handlerState) {
+                try{
+                if (!msg.obj.toString().isEmpty()) {
                     String readMessage = (String) msg.obj;
+                    DataStringIN = new StringBuilder();
                     DataStringIN.append(readMessage);
+                    if(DataStringIN.length() > 15){
                     int endOfLineIndex = DataStringIN.indexOf("#");
                     int startOfLineIndexlat = DataStringIN.indexOf("*");
-                    int endOfLineIndexlog = DataStringIN.lastIndexOf("*");
+                    int endOfLineIndexlog = DataStringIN.indexOf("&");
                     if (endOfLineIndex > 0) {
-                        String dataInPrint = DataStringIN.substring(0, endOfLineIndex);
+
+                        String DataBlue = DataStringIN.substring(0);
+                        DataStringIN.delete(0,DataStringIN.length());
+                        String dataInPrint = DataBlue.substring(0, endOfLineIndex);
                         txtBufferIn.setText("Dato: " + dataInPrint);//<-<- PARTE A MODIFICAR >->-
-                        DataStringIN.delete(0, DataStringIN.length());
+                        DataStringIN.delete(0, DataBlue.length());
                     }
                     //Envia datos a maps
-                    if (startOfLineIndexlat > 0 && endOfLineIndexlog > 0) {
-                        String Coordenadas = DataStringIN.substring(startOfLineIndexlat, endOfLineIndexlog);
-                        txtBufferIn.setText("Dato: " + Coordenadas);//<-<- PARTE A MODIFICAR >->-
-                        ubicacion=new map(Coordenadas);
-                        DataStringIN.delete(0, DataStringIN.length());
+                    if (startOfLineIndexlat > 0 && endOfLineIndexlog > startOfLineIndexlat) {
+                        String DataBlue = DataStringIN.substring(0);
+                        DataStringIN.delete(0,DataStringIN.length());
+                        String Coordenadas = DataBlue.substring(startOfLineIndexlat+1, endOfLineIndexlog);
+                        if(validarCoordenada(Coordenadas)&& lblUbicacion.getText().toString() != Coordenadas){
+                            lblUbicacion.setText(Coordenadas);
+                            txtBufferIn.setText("Dato: " + Coordenadas);//<-<- PARTE A MODIFICAR >->-
+                            //TablaUSER.UPDATE_Ubicacion(lblIDUser.getText().toString(),Coordenadas,getParent().getApplicationContext());
+                        }
                     }
                 }
+                }
+                }
+                catch (Exception e){
+                    Toast.makeText(getParent().getApplicationContext(),"ERROR: "+e.getMessage()+"\nCause: "+e.getCause(),Toast.LENGTH_LONG).show();
+                }
             }
+
         };
         btAdapter = BluetoothAdapter.getDefaultAdapter(); // get Bluetooth adapter
         VerificarEstadoBT();
@@ -110,10 +143,14 @@ map ubicacion;
         btnMaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),Ubicacion.class);
-                intent.putExtra("lat",ubicacion.getLat());
-                intent.putExtra("log",ubicacion.getLog());
-                startActivity(intent);
+                map condenadas = new map(lblUbicacion.getText().toString());
+                if (condenadas.getLat() != 0 && condenadas.getLog() != 0) {
+                    TablaUSER.UPDATE_Ubicacion(lblIDUser.getText().toString(),lblUbicacion.getText().toString(),getApplicationContext());
+                    Intent intent = new Intent(getApplicationContext(), Ubicacion.class);
+                    intent.putExtra("lat", condenadas.getLat());
+                    intent.putExtra("log", condenadas.getLog());
+                    startActivity(intent);
+                }
             }
         });
         btnDesconectar.setOnClickListener(new View.OnClickListener() {
@@ -240,6 +277,16 @@ map ubicacion;
                 Toast.makeText(getBaseContext(), "La Conexión fallo", Toast.LENGTH_LONG).show();
                 finish();
             }
+        }
+    }
+    //Validar correcto patron de cordenadas
+    public boolean validarCoordenada(String Cordenada){
+        String REGEX_NUMEROS = "^[\\-?\\+?0-9]+\\.[\\-?\\+?0-9]+[,][0-9]+\\.[0-9]+$";
+        Pattern patron = Pattern.compile(REGEX_NUMEROS);
+        if(patron.matcher(Cordenada).matches()){
+            return true;
+        }else{
+            return false;
         }
     }
 }

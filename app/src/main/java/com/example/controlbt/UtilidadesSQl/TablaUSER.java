@@ -1,11 +1,15 @@
 package com.example.controlbt.UtilidadesSQl;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import com.example.controlbt.BaseDeDatos;
 import com.example.controlbt.Objetos.ObjUsuario;
+import com.example.controlbt.Ubicacion;
+import com.example.controlbt.map;
 
 import java.util.ArrayList;
 
@@ -54,8 +58,8 @@ public class TablaUSER {
          return usuarioArrayList;
      }
 
-    //Obtener Palabras
-    public static ObjUsuario Login(Context context, String User,String Password){
+    //Login Check User
+    public static Integer Login(Context context, String User,String Password){
         //Creamos nuestra conexion
         BaseDeDatos conn = new BaseDeDatos(context);
         SQLiteDatabase db=conn.getWritableDatabase();
@@ -64,14 +68,44 @@ public class TablaUSER {
             Cursor cursor = db.rawQuery(" SELECT "+
                             CAMPO_PK_GPS+","+Campo_nombre+","+Campo_ubicacion+
                             " FROM "+Tabla_Name+
-                    " WHERE "+Campo_nombre+"LIKE '"+User+"' AND "+Campo_password+" LIKE '"+Password+"'"
+                    " WHERE "+Campo_nombre+" LIKE '"+User+"' AND "+Campo_password+" LIKE '"+Password+"'"
                     , null);
             //Si existen datos los aguardamos en un Array List
             cursor.moveToFirst();
-                ObjUsuario objUser = new ObjUsuario(
-                        Integer.valueOf(cursor.getString(0)),
-                        cursor.getString(1),
-                        cursor.getString(2));
+            Integer ID  = -1;
+                if(!cursor.getString(0).isEmpty()){
+
+                ID = cursor.getInt(0);
+                    cursor.close();
+                return ID;
+            }else{
+                cursor.close();
+                return ID;
+            }
+        }catch (Exception e){
+            //Si no hay datos o ocurre un error se vacia el array, para evitar enviar datos corruptos
+            return -1;
+        }
+    }
+
+    //Get details by ID User
+    public static ObjUsuario GET_User(Context context, Integer ID){
+        //Creamos nuestra conexion
+        BaseDeDatos conn = new BaseDeDatos(context);
+        SQLiteDatabase db=conn.getWritableDatabase();
+        try {
+            //Bucamos el usuario
+            Cursor cursor = db.rawQuery(" SELECT "+
+                            CAMPO_PK_GPS+","+Campo_nombre+","+Campo_ubicacion+
+                            " FROM "+Tabla_Name+
+                            " WHERE "+CAMPO_PK_GPS+" = "+ID
+                    , null);
+            //Si existen datos los aguardamos en un Array List
+            cursor.moveToFirst();
+            ObjUsuario objUser = new ObjUsuario(
+                    Integer.valueOf(cursor.getString(0)),
+                    cursor.getString(1),
+                    cursor.getString(2));
             cursor.close();
             return objUser;
         }catch (Exception e){
@@ -80,4 +114,52 @@ public class TablaUSER {
         }
     }
 
- }
+    //Edita la Ubicacion
+    public static void UPDATE_Ubicacion(String ID, String Ubicacion, Context context){
+
+        //Creamos nuestra conexion
+        BaseDeDatos conn = new BaseDeDatos(context);
+        SQLiteDatabase db=conn.getWritableDatabase();
+
+        //Metodo insert para insertar datos en la tabla Words
+        try{
+
+            //Actualiza la Ubicacion
+            //Parametros
+            if(Integer.valueOf(ID) > 0) {
+                ContentValues Values = new ContentValues();
+                Values.put(Campo_ubicacion, Ubicacion);
+                db.update(Tabla_Name, Values, CAMPO_PK_GPS + "=" + ID, null);
+            }
+        }catch (Exception e){
+            Toast.makeText(context,"ERROR: "+e.getMessage()+"\nCasuse: "+e.getCause(),Toast.LENGTH_LONG).show();
+        }
+    }
+
+    //Get Ubication
+    public static map GET_Ubicacion(Context context, String ID){
+        //Creamos nuestra conexion
+        BaseDeDatos conn = new BaseDeDatos(context);
+        SQLiteDatabase db=conn.getWritableDatabase();
+        try {
+            map condenadas = null;
+            //Bucamos el usuario
+            Cursor cursor = db.rawQuery(" SELECT "+Campo_ubicacion+
+                            " FROM "+Tabla_Name+
+                            " WHERE "+CAMPO_PK_GPS+" = "+ID
+                    , null);
+            //Si existen datos los aguardamos en un Array List
+            cursor.moveToFirst();
+            String cordenS = cursor.getString(0);
+            cursor.close();
+            if(!cordenS.isEmpty())
+                condenadas = new map(cordenS);
+
+            return condenadas;
+        }catch (Exception e){
+            //Si no hay datos o ocurre un error se vacia el array, para evitar enviar datos corruptos
+            return null;
+        }
+    }
+
+}

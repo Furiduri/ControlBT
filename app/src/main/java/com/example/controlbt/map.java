@@ -9,8 +9,13 @@ public class map {
 
     public map(String data) {
         String[] Params = data.split(",");
-        this.lat = Double.valueOf(Params[0]);
-        this.log = Double.valueOf(Params[1]);
+        if(Params.length == 2) {
+            this.lat = Double.valueOf(Params[0]);
+            this.log = Double.valueOf(Params[1]);
+        }else {
+            this.lat = Double.valueOf(0);
+            this.log = Double.valueOf(0);
+        }
     }
 
     public Double getLat(){

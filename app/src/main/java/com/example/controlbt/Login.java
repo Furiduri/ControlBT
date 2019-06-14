@@ -28,11 +28,11 @@ public class Login extends AppCompatActivity {
             String User = txtUser.getText().toString();
             String Password = txtPassword.getText().toString();
             if(!User.isEmpty() && !Password.isEmpty()){
-                ObjUsuario objUser = TablaUSER.Login(this,User,Password);
-                if(objUser.getID() > -1){
-                    Toast.makeText(this,"Bienvenido "+objUser.getName(),Toast.LENGTH_SHORT).show();
+                Integer  ID = TablaUSER.Login(this,User,Password);
+                if(ID > -1){
+
                     Intent nextView = new Intent(this,DispositivosBT.class);
-                    nextView.putExtra("ID",objUser.getID());
+                    nextView.putExtra("ID",ID);
                     startActivity(nextView);
                     finish();
                     return;

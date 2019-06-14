@@ -38,10 +38,12 @@ public class Ubicacion extends FragmentActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
-        Bundle datos = this.getIntent().getExtras();
+        //Bundle datos = this.getIntent().getExtras();
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(datos.getDouble("lat"),datos.getDouble("log"));
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        Double Lat = getIntent().getExtras().getDouble("lat");
+        Double Log = getIntent().getExtras().getDouble("log");
+        LatLng sydney = new LatLng(Lat,Log);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("You are Her"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 }
