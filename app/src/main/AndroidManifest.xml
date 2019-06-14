@@ -18,6 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".UsersCRUD"></activity>
         <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,9 +43,7 @@
         <activity
             android:name=".Ubicacion"
             android:label="@string/title_activity_ubicacion" />
-        <activity android:name=".DispositivosBT">
-
-        </activity>
+        <activity android:name=".DispositivosBT"></activity>
         <activity android:name=".UserInterfaz" />
     </application>
 
