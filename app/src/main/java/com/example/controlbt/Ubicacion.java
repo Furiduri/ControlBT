@@ -42,7 +42,7 @@ public class Ubicacion extends FragmentActivity implements OnMapReadyCallback {
         // Add a marker in Sydney and move the camera
         Double Lat = getIntent().getExtras().getDouble("lat");
         Double Log = getIntent().getExtras().getDouble("log");
-        LatLng sydney = new LatLng(Lat,Log);
+        LatLng sydney = new LatLng(Log,Lat);
         mMap.addMarker(new MarkerOptions().position(sydney).title("You are Her"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }

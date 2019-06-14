@@ -77,17 +77,8 @@ TextView lblUserActual, lblIDUser, lblUbicacion;
                     DataStringIN = new StringBuilder();
                     DataStringIN.append(readMessage);
                     if(DataStringIN.length() > 15){
-                    int endOfLineIndex = DataStringIN.indexOf("#");
                     int startOfLineIndexlat = DataStringIN.indexOf("*");
                     int endOfLineIndexlog = DataStringIN.indexOf("&");
-                    if (endOfLineIndex > 0) {
-
-                        String DataBlue = DataStringIN.substring(0);
-                        DataStringIN.delete(0,DataStringIN.length());
-                        String dataInPrint = DataBlue.substring(0, endOfLineIndex);
-                        txtBufferIn.setText("Dato: " + dataInPrint);//<-<- PARTE A MODIFICAR >->-
-                        DataStringIN.delete(0, DataBlue.length());
-                    }
                     //Envia datos a maps
                     if (startOfLineIndexlat > 0 && endOfLineIndexlog > startOfLineIndexlat) {
                         String DataBlue = DataStringIN.substring(0);
