@@ -66,7 +66,8 @@ TextView lblUserActual, lblIDUser, lblUbicacion;
                      "Usuario: "+UserLogin.getName()+" \nUltima Ubicacion: \n"+UserLogin.getUbicacion()
              );
              lblIDUser.setText(UserLogin.getID().toString());
-             lblUbicacion.setText(UserLogin.getUbicacion());
+             String[] cordenadas = UserLogin.getUbicacion().toString().split(",");
+             lblUbicacion.setText(cordenadas[0]+"\n"+cordenadas[1]);
          }
         //Bluetooth
         bluetoothIn = new Handler() {
@@ -85,7 +86,8 @@ TextView lblUserActual, lblIDUser, lblUbicacion;
                         DataStringIN.delete(0,DataStringIN.length());
                         String Coordenadas = DataBlue.substring(startOfLineIndexlat+1, endOfLineIndexlog);
                         if(validarCoordenada(Coordenadas)&& lblUbicacion.getText().toString() != Coordenadas){
-                            lblUbicacion.setText(Coordenadas);
+                            String[] corden = Coordenadas.split(",");
+                            lblUbicacion.setText(corden[0]+"\n"+corden[1]);
                             txtBufferIn.setText("Dato: " + Coordenadas);//<-<- PARTE A MODIFICAR >->-
                             //TablaUSER.UPDATE_Ubicacion(lblIDUser.getText().toString(),Coordenadas,getParent().getApplicationContext());
                         }
