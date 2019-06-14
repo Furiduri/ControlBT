@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,7 +50,6 @@ map ubicacion;
         btnMaps=(Button)findViewById(R.id.btnMaps);
         txtBufferIn=(TextView) findViewById(R.id.txtBufferIn);
     btnDerecha=(Button) findViewById(R.id.btnDerecha);
-ubicacion=new map();
         btnIzquierda=(Button) findViewById(R.id.btnIzquierda);
 
         bluetoothIn = new Handler() {
@@ -57,12 +57,19 @@ ubicacion=new map();
                 if (msg.what == handlerState) {
                     String readMessage = (String) msg.obj;
                     DataStringIN.append(readMessage);
-
                     int endOfLineIndex = DataStringIN.indexOf("#");
-
+                    int startOfLineIndexlat = DataStringIN.indexOf("*");
+                    int endOfLineIndexlog = DataStringIN.lastIndexOf("*");
                     if (endOfLineIndex > 0) {
                         String dataInPrint = DataStringIN.substring(0, endOfLineIndex);
-                        txtBufferIn.setText("Dato: " + dataInPrint);//<-<- PARTE A MODIFICAR >->->
+                        txtBufferIn.setText("Dato: " + dataInPrint);//<-<- PARTE A MODIFICAR >->-
+                        DataStringIN.delete(0, DataStringIN.length());
+                    }
+                    //Envia datos a maps
+                    if (startOfLineIndexlat > 0 && endOfLineIndexlog > 0) {
+                        String Coordenadas = DataStringIN.substring(startOfLineIndexlat, endOfLineIndexlog);
+                        txtBufferIn.setText("Dato: " + Coordenadas);//<-<- PARTE A MODIFICAR >->-
+                        ubicacion=new map(Coordenadas);
                         DataStringIN.delete(0, DataStringIN.length());
                     }
                 }
@@ -104,8 +111,6 @@ ubicacion=new map();
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),Ubicacion.class);
-                ubicacion.setLat(20.6736);
-                ubicacion.setLog( -103.344);
                 intent.putExtra("lat",ubicacion.getLat());
                 intent.putExtra("log",ubicacion.getLog());
                 startActivity(intent);

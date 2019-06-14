@@ -7,6 +7,12 @@ public class map {
         this.lat=lat;
     }
 
+    public map(String data) {
+        String[] Params = data.split(",");
+        this.lat = Double.valueOf(Params[0]);
+        this.log = Double.valueOf(Params[1]);
+    }
+
     public Double getLat(){
         return lat;
     }
