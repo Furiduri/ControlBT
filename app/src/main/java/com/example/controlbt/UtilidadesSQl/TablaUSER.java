@@ -179,22 +179,38 @@ public class TablaUSER {
                             " FROM "+Tabla_Name+" WHERE "+Campo_nombre+" LIKE '"+nombre+"' "
                     , null);
             //Si existe retorna el ID y el nivel de la palabra
-            cursor.moveToFirst();
-            ResID = cursor.getString(0) + " (YA EXISTE!)";
-            contraseña = cursor.getString(1);
-            cursor.close();
+            if(cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                ResID = cursor.getString(0) + " (YA EXISTE!)";
+                cursor.close();
+            }else{
+                cursor.close();
+                //si no existe la agrega
+                db.execSQL("insert into "+ TablaUSER.Tabla_Name+
+                        "("+TablaUSER.Campo_nombre+","+TablaUSER.Campo_password+","+TablaUSER.Campo_ubicacion+")"+
+                        " values('"+nombre+"','"+contraseña+"','0,0')");
+                cursor = db.rawQuery(" SELECT "+CAMPO_PK_GPS+
+                                " FROM "+Tabla_Name+" WHERE "+Campo_nombre+" LIKE '"+nombre+"' "
+                        , null);
+                if(cursor.getCount() > 0) {
+                    cursor.moveToFirst();
+                    ResID = cursor.getString(0) + " (Creado!)";
+                    cursor.close();
+                }else{
+                   return  "Error al crear!";
+                }
+                db.close();
+                //Retorno del ID y la comprobacion de los datos ingresados
+
+            }
         }catch (Exception e){
-            //si no existe la agrega
-            Long idResultante=db.insert(Campo_nombre,Campo_password,Values);
-            db.close();
-            //Retorno del ID y la comprobacion de los datos ingresados
-            ResID = idResultante.toString();
+            return ResID + "\n"+e.getMessage()+"\nCause: "+e.getCause();
         }
         return ResID + ", El nombre: "+nombre;
     }
 
     //Edita la Ubicacion
-    public static void editUsuario(String ID, String nombre, String newContra, String oldContra, Context context)
+    public static boolean editUsuario(String ID, String nombre, String newContra, String oldContra, Context context)
         {
 
             //Creamos nuestra conexion
@@ -208,30 +224,36 @@ public class TablaUSER {
                     Cursor cursor = db.rawQuery(" SELECT "+
                                     CAMPO_PK_GPS+
                                     " FROM "+Tabla_Name+
-                                    " WHERE "+Campo_nombre+" LIKE "+ID+" AND "+Campo_password+" LIKE '"+oldContra+"'"
+                                    " WHERE "+CAMPO_PK_GPS+" = "+ID+" AND "+Campo_password+" LIKE '"+oldContra+"'"
                             , null);
                     //Si existen datos los aguardamos en un Array List
-                    cursor.moveToFirst();
-                    Integer IDr  = -1;
-                    if(!cursor.getString(0).isEmpty()){
+                    boolean isValid = false;
+                    if(cursor.getCount() > 0)
+                        isValid = true;
 
-                        IDr = cursor.getInt(0);
-                        cursor.close();
-                    }
 
 
                 //Actualiza el usuario
                 //Parametros
-                if((Integer.valueOf(ID)).equals(IDr))
+                if(isValid)
                     {
                         ContentValues Values = new ContentValues();
                         Values.put(Campo_nombre, nombre);
                         Values.put(Campo_password, newContra);
                         db.update(Tabla_Name, Values, CAMPO_PK_GPS + "=" + ID, null);
-                    }
+                        db.close();
+                        return true;
+                    }else{
+                    db.close();
+                    return false;
+                }
+
                 }catch (Exception e)
                     {
                     Toast.makeText(context,"ERROR: "+e.getMessage()+"\nCasuse: "+e.getCause(),Toast.LENGTH_LONG).show();
+                        db.close();
+                        return false;
                     }
+
         }
 }

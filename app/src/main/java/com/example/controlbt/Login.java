@@ -25,8 +25,8 @@ public class Login extends AppCompatActivity {
         try {
             EditText txtUser = (EditText)findViewById(R.id.txtUser);
             EditText txtPassword = (EditText)findViewById(R.id.txtPassword);
-            String User = txtUser.getText().toString();
-            String Password = txtPassword.getText().toString();
+            String User = txtUser.getText().toString().trim();
+            String Password = txtPassword.getText().toString().trim();
             if(!User.isEmpty() && !Password.isEmpty()){
                 Integer  ID = TablaUSER.Login(this,User,Password);
                 if(ID > -1){

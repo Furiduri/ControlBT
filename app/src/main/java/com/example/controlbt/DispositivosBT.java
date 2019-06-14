@@ -68,18 +68,21 @@ public class DispositivosBT extends AppCompatActivity {
     // Configura un (on-click) para la lista
     private AdapterView.OnItemClickListener mDeviceClickListener = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView av, View v, int arg2, long arg3) {
+            try {
+                // Obtener la dirección MAC del dispositivo, que son los últimos 17 caracteres en la vista
+                String info = ((TextView) v).getText().toString();
+                String address = info.substring(info.length() - 17);
 
-            // Obtener la dirección MAC del dispositivo, que son los últimos 17 caracteres en la vista
-            String info = ((TextView) v).getText().toString();
-            String address = info.substring(info.length() - 17);
-
-            // Realiza un intent para iniciar la siguiente actividad
-            // mientras toma un EXTRA_DEVICE_ADDRESS que es la dirección MAC.
-            Intent i = new Intent(DispositivosBT.this, UserInterfaz.class);//<-<- PARTE A MODIFICAR >->->
-            i.putExtra(EXTRA_DEVICE_ADDRESS, address);
-            i.putExtra("ID",getIntent().getExtras().getInt("ID"));
-            startActivity(i);
-            finish();
+                // Realiza un intent para iniciar la siguiente actividad
+                // mientras toma un EXTRA_DEVICE_ADDRESS que es la dirección MAC.
+                Intent i = new Intent(DispositivosBT.this, UserInterfaz.class);//<-<- PARTE A MODIFICAR >->->
+                i.putExtra(EXTRA_DEVICE_ADDRESS, address);
+                i.putExtra("ID", getIntent().getExtras().getInt("ID"));
+                startActivity(i);
+                finish();
+            }catch (Exception e){
+                Toast.makeText(getApplicationContext(),"ERROR: "+e.getMessage()+"\nCAUSE: "+e.getCause(),Toast.LENGTH_LONG).show();
+            }
         }
     };
 

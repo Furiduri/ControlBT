@@ -280,4 +280,11 @@ TextView lblUserActual, lblIDUser, lblUbicacion;
             return false;
         }
     }
+
+    //GO to CRUD USERS
+    public void btnCRUDUsers(View view){
+        Intent intentCRUD = new Intent(getApplicationContext(),UsersCRUD.class);
+        startActivity(intentCRUD);
+        onPause();
+    }
 }
