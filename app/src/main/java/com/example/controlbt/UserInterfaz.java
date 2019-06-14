@@ -63,7 +63,7 @@ TextView lblUserActual, lblIDUser, lblUbicacion;
         if( ID > -1){
              UserLogin = TablaUSER.GET_User(this,ID);
              lblUserActual.setText(
-                     "Usuario: "+UserLogin.getName()+" \nUltima Ubicacion: "+UserLogin.getUbicacion()
+                     "Usuario: "+UserLogin.getName()+" \nUltima Ubicacion: \n"+UserLogin.getUbicacion()
              );
              lblIDUser.setText(UserLogin.getID().toString());
              lblUbicacion.setText(UserLogin.getUbicacion());

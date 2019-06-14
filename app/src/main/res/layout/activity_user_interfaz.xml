@@ -1,28 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/secondaryLightColor">
-
-    <Button
-        android:id="@+id/btnMaps"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/ic_place"
-        android:backgroundTint="@color/common_google_signin_btn_text_light_pressed"
-        android:gravity="left"
-        android:textAlignment="center"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/txtBufferIn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtControl"
-        app:layout_constraintVertical_bias="0.0" />
+    android:background="@color/secondaryLightColor"
+    android:gravity="center|top"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/txtControl"
@@ -36,122 +21,70 @@
         android:textAlignment="center"
         android:textColor="@color/secondaryTextColor"
         android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/txtBufferIn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/txtBufferIn"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="500dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="300dp"
-        android:background="@color/common_google_signin_btn_text_dark_disabled"
-        android:gravity="center|end"
-        android:inputType="text|textImeMultiLine"
-        android:text="Datos"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        android:gravity="center"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btnDesconectar"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="300dp"
-        android:background="@drawable/ic_logout"
-        android:gravity="right"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/txtBufferIn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.927"
-        app:layout_constraintStart_toEndOf="@+id/btnMaps"
-        app:layout_constraintTop_toBottomOf="@+id/txtControl"
-        app:layout_constraintVertical_bias="0.0" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:gravity="center"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/lblUsertLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="32dp"
-        android:gravity="center_horizontal"
-        android:text="sfsfs"
-        android:textAlignment="center"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
-        app:layout_constraintEnd_toStartOf="@+id/btnDesconectar"
-        app:layout_constraintHorizontal_bias="0.54"
-        app:layout_constraintStart_toEndOf="@+id/btnMaps"
-        app:layout_constraintTop_toBottomOf="@+id/txtControl"
-        app:layout_constraintVertical_bias="0.0" />
+            <Button
+                android:id="@+id/btnMaps"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/ic_place"
+                android:backgroundTint="@color/common_google_signin_btn_text_light_pressed"
+                android:gravity="left"
+                android:textAlignment="center"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/lblIDUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="353dp"
-        android:layout_marginBottom="48dp"
-        android:text="TextView"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/lblUbication"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="gddgdhg"
+                android:textAlignment="textStart"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="14sp"
+                android:visibility="visible" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/lblUbication"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="16dp"
-        android:gravity="left"
-        android:text="gddgdhg"
-        android:textAlignment="textStart"
-        android:textColor="@color/primaryTextColor"
-        android:textSize="14sp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnMaps"
-        app:layout_constraintVertical_bias="0.0" />
+        <TextView
+            android:id="@+id/lblUsertLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="sfsfs"
+            android:textAlignment="center"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btnDesconectar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="24dp"
+            android:background="@drawable/ic_logout"
+            android:textAlignment="center" />
+    </LinearLayout>
 
     <TableLayout
         android:id="@+id/tableLayout"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="24dp"
-        android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/txtBufferIn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnMaps"
-        app:layout_constraintVertical_bias="0.941">
+        android:gravity="center">
 
         <TableRow
             android:id="@+id/tableRow"
@@ -225,19 +158,36 @@
     </TableLayout>
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/btnCRUDUsers"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
+        android:onClick="btnCRUDUsers"
+        android:src="@drawable/ic_pensamiento" />
+
+    <TextView
+        android:id="@+id/txtBufferIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/common_google_signin_btn_text_dark_disabled"
+        android:gravity="center|end"
+        android:inputType="text|textImeMultiLine"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:text="Datos"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/lblIDUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:onClick="btnCRUDUsers"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtBufferIn"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ic_pensamiento" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_marginStart="353dp"
+        android:layout_marginBottom="48dp"
+        android:text="TextView"
+        android:visibility="invisible" />
+
+</LinearLayout>
